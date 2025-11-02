@@ -12,6 +12,10 @@ WIDTH, HEIGHT = 700, 700
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
+BORDER_THICKNESS = 10
+DOOR = 60
+WALL_THICKNESS = 15
+
 pygame.init()
 screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.RESIZABLE)
 pygame.display.set_caption("Hospital robot simulation")
@@ -23,7 +27,7 @@ bed_img = pygame.image.load("images/obj_obstacles/bed.png").convert_alpha()
 bed_img = pygame.transform.scale(bed_img, (50, 80))
 
 #position of the obstacle
-bed_x, bed_y = 100, 0
+bed_x, bed_y = 100, BORDER_THICKNESS
 bed_rect = pygame.Rect(bed_x, bed_y, bed_img.get_width(), bed_img.get_height())
 for i in range(len(robot_imgs)):
     robot_imgs[i] = pygame.transform.scale(robot_imgs[i], (40, 40))
@@ -47,9 +51,7 @@ def draw_robot(surface, x, y, angle):
         surface.blit(robot_imgs[3], (x, y))
 
 # Create obstacles
-BORDER_THICKNESS = 10
-DOOR = 60
-WALL_THICKNESS = 15
+
 r1 = Room_data(WIDTH, BORDER_THICKNESS, HEIGHT, DOOR)
 
 obstacles = [

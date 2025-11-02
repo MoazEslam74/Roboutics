@@ -129,10 +129,11 @@ while True:
             next_y = robot_y + dy / distance * speed
 
             # check collision before moving
-            while  will_collide(next_x, next_y):
-                next_x, next_y = get_path(next_x,next_y)
-                # stop if hitting border
+            if not will_collide(next_x, next_y):
                 robot_x, robot_y = next_x, next_y
+            else:
+                # stop if hitting border
+                target_x, target_y = get_path(next_x,next_y)
         else:
             robot_x, robot_y = target_x, target_y
             target_x, target_y = None, None

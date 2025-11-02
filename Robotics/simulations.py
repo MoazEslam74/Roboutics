@@ -19,8 +19,12 @@ clock = pygame.time.Clock()
 
 fullscreen = False
 robot_imgs = Robot.robot_imgs
-bed_img = pygame.image.load("images/obj_obstacles/bed.png").convert_alpha()
+bed_img = pygame.image.load("images/bed.png").convert_alpha()
 bed_img = pygame.transform.scale(bed_img, (100, 60))
+
+#position of the obstacle
+bed_x, bed_y = 300, 300
+bed_rect = pygame.Rect(bed_x, bed_y, bed_img.get_width(), bed_img.get_height())
 for i in range(len(robot_imgs)):
     robot_imgs[i] = pygame.transform.scale(robot_imgs[i], (40, 40))
 
@@ -122,6 +126,8 @@ while True:
             target_x, target_y = mx - 20, my - 20
 
     screen.fill(WHITE)
+    screen.blit(bed_img, (bed_x, bed_y))
+
     for obs in obstacles:
         pygame.draw.rect(screen, BLACK, obs)
 

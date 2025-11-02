@@ -19,6 +19,8 @@ clock = pygame.time.Clock()
 
 fullscreen = False
 robot_imgs = Robot.robot_imgs
+bed_img = pygame.image.load("images/obj_obstacles/bed.png").convert_alpha()
+bed_img = pygame.transform.scale(bed_img, (100, 60))
 for i in range(len(robot_imgs)):
     robot_imgs[i] = pygame.transform.scale(robot_imgs[i], (40, 40))
 

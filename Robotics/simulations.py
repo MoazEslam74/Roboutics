@@ -87,6 +87,11 @@ def will_collide(next_x, next_y):
             return True
     return False
 
+#local find another path
+def get_path(next_x,next_y):
+    return next_x,next_y+1
+
+
 # Main loop
 while True:
     for event in pygame.event.get():
@@ -124,11 +129,10 @@ while True:
             next_y = robot_y + dy / distance * speed
 
             # check collision before moving
-            if not will_collide(next_x, next_y):
-                robot_x, robot_y = next_x, next_y
-            else:
+            while  will_collide(next_x, next_y):
+                next_x, next_y = get_path(next_x,next_y)
                 # stop if hitting border
-                target_x, target_y = None, None
+                robot_x, robot_y = next_x, next_y
         else:
             robot_x, robot_y = target_x, target_y
             target_x, target_y = None, None

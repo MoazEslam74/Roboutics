@@ -19,7 +19,7 @@ clock = pygame.time.Clock()
 
 fullscreen = False
 robot_imgs = Robot.robot_imgs
-bed_img = pygame.image.load("images/bed.png").convert_alpha()
+bed_img = pygame.image.load("images/obj_obstacles/bed.png").convert_alpha()
 bed_img = pygame.transform.scale(bed_img, (100, 60))
 
 #position of the obstacle

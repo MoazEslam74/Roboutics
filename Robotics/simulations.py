@@ -130,10 +130,11 @@ while True:
             target_x, target_y = mx - 20, my - 20
 
     screen.fill(WHITE)
-    screen.blit(bed_img, (bed_x, bed_y))
+    
 
     for obs in obstacles:
         pygame.draw.rect(screen, BLACK, obs)
+        screen.blit(bed_img, (bed_x, bed_y))
 
     if target_x is not None and target_y is not None:
         dx = (target_x) - robot_x

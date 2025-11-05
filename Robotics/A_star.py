@@ -4,7 +4,7 @@ import math
 
 from Robot import Robot
 from Room_data import Room_data
-
+from PriorityQueue import PriorityQueue as priority_queue
 #size of the window
 WIDTH, HEIGHT = 700, 700
 
@@ -71,3 +71,14 @@ def will_collide(next_x, next_y):
         if robot_rect.colliderect(obs):
             return True
     return False
+
+
+Goal = [[0, (637, 33)], [1, (47, 302)], [2, (646, 279)], [3, (57,52)], [4, (45, 528)], [5, (636, 513)]]
+
+def AStar(Goal, start):
+    open_set=priority_queue()
+    
+    for i in range(len(Goal)):
+        open_set.push(Goal[i][1], Goal[i][0])
+
+print(AStar(Goal, (robot_x, robot_y)))

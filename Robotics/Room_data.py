@@ -2,10 +2,10 @@ import pygame
 
 class Room_data:
 
-    WIDTH=0
-    BORDER_THICKNESS=0
-    HEIGHT=0
-    DOOR=0
+    WIDTH=700
+    BORDER_THICKNESS=10
+    HEIGHT=700
+    DOOR=60
 
     def __init__(self, width, border,height,door):
         self.WIDTH = width
@@ -29,3 +29,22 @@ class Room_data:
     pygame.Rect(WIDTH*3/4, HEIGHT/4+DOOR, WIDTH/4, BORDER_THICKNESS), # wall horizontal
     pygame.Rect(WIDTH*3/4, 2*(HEIGHT/4+DOOR), WIDTH/4, BORDER_THICKNESS) # wall horizontal
     ]
+    obj_obstacles_first_floor=[
+        [pygame.image.load("Robotics/images/obj_obstacles/bed.png"), (50, 80), (100, BORDER_THICKNESS)],
+        [pygame.image.load("Robotics/images/obj_obstacles/bed.png"), (50, 80), (WIDTH-100, BORDER_THICKNESS)],
+        [pygame.image.load("Robotics/images/obj_obstacles/bed.png"), (50, 80), (100, 2*BORDER_THICKNESS+HEIGHT//3)],
+        [pygame.image.load("Robotics/images/obj_obstacles/bed.png"), (50, 80), (WIDTH-100, 2*BORDER_THICKNESS+HEIGHT//3)],
+        [pygame.image.load("Robotics/images/obj_obstacles/bed.png"), (50, 80), (100, 2*BORDER_THICKNESS+2*HEIGHT//3)],
+        [pygame.image.load("Robotics/images/obj_obstacles/bed.png"), (50, 80), (WIDTH-100, 2*BORDER_THICKNESS+2*HEIGHT//3)],
+        [pygame.image.load("Robotics/images/obj_obstacles/room_chair.png"), (30, 30), (50, BORDER_THICKNESS)],
+        [pygame.image.load("Robotics/images/obj_obstacles/room_chair.png"), (30, 30), (8*WIDTH/10, BORDER_THICKNESS)],
+        [pygame.image.load("Robotics/images/obj_obstacles/room_chair.png"), (30, 30), (50, 2*BORDER_THICKNESS+HEIGHT//3)],
+        [pygame.image.load("Robotics/images/obj_obstacles/room_chair.png"), (30, 30), (8*WIDTH/10, 2*BORDER_THICKNESS+HEIGHT//3)],
+        [pygame.image.load("Robotics/images/obj_obstacles/room_chair.png"), (30, 30), (50, 2*BORDER_THICKNESS+2*HEIGHT//3)],
+        [pygame.image.load("Robotics/images/obj_obstacles/room_chair.png"), (30, 30), (8*WIDTH/10,2*BORDER_THICKNESS+2*HEIGHT//3)],
+        [pygame.image.load("Robotics/images/obj_obstacles/counter_1.png"), (90, 50), (WIDTH/2,BORDER_THICKNESS+20)],
+
+    ]
+    
+
+    

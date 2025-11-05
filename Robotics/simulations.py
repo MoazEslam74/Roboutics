@@ -23,12 +23,12 @@ clock = pygame.time.Clock()
 
 fullscreen = False
 robot_imgs = Robot.robot_imgs
-bed_img = pygame.image.load("images/obj_obstacles/bed.png").convert_alpha()
-bed_img = pygame.transform.scale(bed_img, (50, 80))
 
-#position of the obstacle
-bed_x, bed_y = 100, BORDER_THICKNESS
-bed_rect = pygame.Rect(bed_x, bed_y, bed_img.get_width(), bed_img.get_height())
+r1 = Room_data(WIDTH, BORDER_THICKNESS, HEIGHT, DOOR)
+obstacles = r1.first_floor_struct
+obj_obstacles = r1.obj_obstacles_first_floor
+
+
 
 
 for i in range(len(robot_imgs)):
@@ -54,27 +54,10 @@ def draw_robot(surface, x, y, angle):
 
 # Create obstacles
 
-r1 = Room_data(WIDTH, BORDER_THICKNESS, HEIGHT, DOOR)
 
-obstacles = [
-    pygame.Rect(0, 0, WIDTH, BORDER_THICKNESS),
-    pygame.Rect(0, 0, BORDER_THICKNESS, HEIGHT),
-    pygame.Rect(0, HEIGHT - BORDER_THICKNESS, WIDTH, BORDER_THICKNESS),
-    pygame.Rect(WIDTH - BORDER_THICKNESS, 0, BORDER_THICKNESS, HEIGHT),
-    pygame.Rect(WIDTH / 4, 0, BORDER_THICKNESS, HEIGHT / 4),
-    pygame.Rect(WIDTH / 4, HEIGHT / 4 + DOOR, BORDER_THICKNESS, HEIGHT / 4),
-    pygame.Rect(WIDTH / 4, HEIGHT / 2 + 2 * DOOR, BORDER_THICKNESS, HEIGHT / 5),
-    pygame.Rect(0, HEIGHT / 4 + DOOR, WIDTH / 4, BORDER_THICKNESS),
-    pygame.Rect(0, 2 * (HEIGHT / 4 + DOOR), WIDTH / 4, BORDER_THICKNESS),
-    pygame.Rect(WIDTH * 3 / 4, 0, BORDER_THICKNESS, HEIGHT / 4),
-    pygame.Rect(WIDTH * 3 / 4, HEIGHT / 4 + DOOR, BORDER_THICKNESS, HEIGHT / 4),
-    pygame.Rect(WIDTH * 3 / 4, HEIGHT / 2 + 2 * DOOR, BORDER_THICKNESS, HEIGHT / 5),
-    pygame.Rect(WIDTH * 3 / 4, HEIGHT / 4 + DOOR, WIDTH / 4, BORDER_THICKNESS),
-    pygame.Rect(WIDTH * 3 / 4, 2 * (HEIGHT / 4 + DOOR), WIDTH / 4, BORDER_THICKNESS)
-]
-obstacles.append(bed_rect)
 def draw_target(surface, x, y):
     pygame.draw.circle(surface, (255, 0, 0), (x + 20, y + 20), 10)
+    print("Target drawn at:", x, y)
 
 robot_x = WIDTH // 2
 robot_y = HEIGHT // 2
@@ -82,6 +65,7 @@ target_x = None
 target_y = None
 angle = 0
 speed = 4
+
 
 def will_collide(next_x, next_y):
     robot_rect = pygame.Rect(next_x, next_y, 40, 40)
@@ -134,7 +118,20 @@ while True:
 
     for obs in obstacles:
         pygame.draw.rect(screen, BLACK, obs)
-        screen.blit(bed_img, (bed_x, bed_y))
+
+    for i in range(len(obj_obstacles)):
+        bed_img = obj_obstacles[i][0].convert_alpha()
+        bed_img = pygame.transform.scale(bed_img, obj_obstacles[i][1])
+
+    #position of the obstacle
+        bed_x, bed_y = obj_obstacles[i][2]
+        bed_rect = pygame.Rect(bed_x, bed_y, bed_img.get_width()-20, bed_img.get_height())
+        obstacles.append(bed_rect)
+    
+    for i in range(len(obj_obstacles)):
+        bed_img = obj_obstacles[i][0]
+        bed_rect = bed_img.get_rect(topleft=(obj_obstacles[i][2]))
+        screen.blit(bed_img, bed_rect)
 
     if target_x is not None and target_y is not None:
         dx = (target_x) - robot_x

@@ -73,12 +73,34 @@ def will_collide(next_x, next_y):
     return False
 
 
-Goal = [[0, (637, 33)], [1, (47, 302)], [2, (646, 279)], [3, (57,52)], [4, (45, 528)], [5, (636, 513)]]
+Goal = [[4, (637, 33)], [3, (47, 302)], [1, (646, 279)], [5, (57,52)], [0, (45, 528)], [2, (636, 513)]]
 
 def AStar(Goal, start):
     open_set=priority_queue()
     
     for i in range(len(Goal)):
         open_set.push(Goal[i][1], Goal[i][0])
+    robot_x, robot_y = start
+    x,y=priority_queue.pop_lowest_f()
+    GScore = distance(robot_x, robot_y, x, y)
 
-print(AStar(Goal, (robot_x, robot_y)))
+def distance(robot_x, robot_y, x, y):
+    return math.sqrt((robot_x - x) ** 2 + (robot_y - y) ** 2)
+
+
+def move(start, goal, speed):
+    directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+    neighbours = []
+    min_heurstic=100000
+    heurstic_x=0
+    heurstic_y=0
+    for i in range(directions):
+        position_x=start[0]+(directions[i][0]*speed)
+        position_y=start[1]+(directions[i][1]*speed)
+        if not will_collide(position_x,position_y):
+            x,y=goal
+            if distance(position_x, position_y,x,y)<min_heurstic:
+                min_heurstic = distance(position_x, position_y,x,y)
+                heurstic_x=position_x
+                heurstic_y=position_y
+        neighbours.append([heurstic_x,heurstic_y])

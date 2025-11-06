@@ -74,11 +74,10 @@ def will_collide(next_x, next_y):
             return True
     return False
 
-# بدلناها لتجرب اتجاهات مختلفة يمين وشمال
 def get_path(x, y, dx, dy, attempts=10):
-    step_angle = 30  # جرب كل مرة 30 درجة يمين
+    step_angle = 30  #look at every 30 degrees
     for i in range(attempts):
-        # لفة يمين
+        # rotate right
         angle_r = math.atan2(dy, dx) - math.radians(step_angle * (i + 1))
         new_dx = math.cos(angle_r)
         new_dy = math.sin(angle_r)
@@ -86,7 +85,7 @@ def get_path(x, y, dx, dy, attempts=10):
         new_y = y + new_dy * 40
         if not will_collide(new_x, new_y):
             return new_x, new_y
-        # لو يمين مقفول نجرب شمال
+        # rotate left
         angle_l = math.atan2(dy, dx) + math.radians(step_angle * (i + 1))
         new_dx = math.cos(angle_l)
         new_dy = math.sin(angle_l)
@@ -94,7 +93,7 @@ def get_path(x, y, dx, dy, attempts=10):
         new_y = y + new_dy * 40
         if not will_collide(new_x, new_y):
             return new_x, new_y
-    return x, y  # مفيش طريق بديل لسه
+    return x, y  # no alternative path found yet
 
 # Main loop
 while True:
@@ -112,8 +111,9 @@ while True:
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             mx, my = event.pos
             target_x, target_y = mx - 20, my - 20
-
+    
     screen.fill(WHITE)
+    pygame.draw.circle(screen, (0, 255, 0), (356, 640), 20)
     
 
     for obs in obstacles:
@@ -148,7 +148,7 @@ while True:
             if not will_collide(next_x, next_y):
                 robot_x, robot_y = next_x, next_y
             else:
-                # لو في عائق -> جرب اتجاه جديد باستخدام get_path
+                # Obstacle detected, try to find alternative path
                 new_x, new_y = get_path(robot_x, robot_y, dx, dy)
                 if (new_x, new_y) != (robot_x, robot_y):
                     robot_x, robot_y = new_x, new_y
@@ -160,5 +160,15 @@ while True:
             draw_target(screen, int(target_x), int(target_y))
 
     draw_robot(screen, int(robot_x), int(robot_y), angle)
+    if robot_x >=326 and robot_x <=386 and robot_y >=610 and robot_y <=670:
+        screen.fill(WHITE)
+        obstacles= r1.emergency_floor_struct
+        obj_obstacles= r1.obj_obstacles_emergency_floor
+        robot_x = WIDTH -150
+        robot_y = HEIGHT -150
+        target_x = None
+        target_y = None
+
+
     pygame.display.update()
     clock.tick(30)
